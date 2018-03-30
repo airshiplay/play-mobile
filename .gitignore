@@ -1,0 +1,14 @@
+.project
+.settings
+*/target/*
+
+
+
+#.gitignore for java
+*.class
+
+#Package Files#
+*.jar
+*.war
+*.ear
+

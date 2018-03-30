@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PlayItemView">
+        <attr name="item_title" format="string|reference"/>
+        <attr name="item_title_icon" format="reference" />
+        <attr name="item_value" format="string|reference" />
+        <attr name="item_open_icon" format="reference" />
+        <attr name="item_open_show" format="boolean" />
+    </declare-styleable>
+</resources>
