@@ -1,14 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="#7722ff"
+
+    android:orientation="vertical">
 
     <com.airletnet.basiccomponent.PlayItemView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:item_title="title"
-    android:background="@color/white"
-    app:item_title_icon="@mipmap/ic_launcher"
-    app:item_value="value"/>
-</RelativeLayout>
+        android:layout_marginTop="20dp"
+        android:id="@+id/item_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:item_title="title"
+        app:item_position="top"
+        app:item_title_icon="@mipmap/ic_launcher"
+        app:item_value="value" />
+
+    <com.airletnet.basiccomponent.PlayItemView
+        android:id="@+id/item_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:item_title="title"
+        app:item_position="bottom"
+        app:item_title_icon="@mipmap/ic_launcher"
+        app:item_value="value" />
+
+    <com.airletnet.basiccomponent.PlayItemView
+        android:layout_marginTop="20dp"
+        android:id="@+id/item_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:item_title="title"
+        android:clipToPadding="false"
+        app:item_position="top"
+        app:item_value="value" />
+    <com.airletnet.basiccomponent.PlayItemView
+         android:id="@+id/item_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:item_title="title"
+        android:clipToPadding="false"
+        app:item_position="center"
+        app:item_value_type="edit_text"
+        app:item_value="value" />
+    <com.airletnet.basiccomponent.PlayItemView
+        android:id="@+id/item_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:item_title="title"
+        android:clipToPadding="false"
+        app:item_position="bottom"
+        app:item_value_type="switch_compat"
+        app:item_value="true" />
+    <android.support.v7.widget.SwitchCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.airletnet.basiccomponent.SwitchButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.airletnet.basiccomponent.LabeledSwitch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.github.zagum.switchicon.SwitchIconView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

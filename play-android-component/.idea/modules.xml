@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/basic-component/basic-component.iml" filepath="$PROJECT_DIR$/basic-component/basic-component.iml" />
-      <module fileurl="file://$PROJECT_DIR$/kprogresshud/kprogresshud.iml" filepath="$PROJECT_DIR$/kprogresshud/kprogresshud.iml" />
       <module fileurl="file://$PROJECT_DIR$/play-android-component.iml" filepath="$PROJECT_DIR$/play-android-component.iml" />
       <module fileurl="file://$PROJECT_DIR$/pulltorefresh/pulltorefresh.iml" filepath="$PROJECT_DIR$/pulltorefresh/pulltorefresh.iml" />
       <module fileurl="file://$PROJECT_DIR$/pulltorefreshrecyclerview/pulltorefreshrecyclerview.iml" filepath="$PROJECT_DIR$/pulltorefreshrecyclerview/pulltorefreshrecyclerview.iml" />

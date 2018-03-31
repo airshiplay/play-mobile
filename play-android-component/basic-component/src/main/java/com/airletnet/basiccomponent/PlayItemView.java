@@ -1,17 +1,17 @@
 package com.airletnet.basiccomponent;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
-import android.os.Build;
 import android.support.annotation.Nullable;
-import android.support.v7.content.res.AppCompatResources;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.SwitchCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -22,116 +22,191 @@ import android.widget.LinearLayout;
  * Created by airlenet on 2018/3/30.
  */
 
-public class PlayItemView extends LinearLayout{
+public class PlayItemView extends LinearLayout {
     private AppCompatTextView mTitle;
     private AppCompatTextView mValue;
     private AppCompatImageView mTitleIcon;
     private AppCompatImageView mOpenIcon;
+    private AppCompatEditText mEditText;
+    private SwitchCompat mSwitchCompat;
+    Paint mPaint = new Paint();
+    int defaultSidelineColor = Color.parseColor("#bbbbbb");
+    int position = 0;
+    public static final int POSITION_SINGLE = 0;
+    public static final int POSITION_TOP = 1;
+    public static final int POSITION_CENTER = 2;
+    public static final int POSITION_BOTTOM = 3;
+    int valueType = 0;
+    public static final int VALUE_TYPE_TEXTVIEW = 0;
+    public static final int VALUE_TYPE_EDITTEXT = 1;
+    public static final int VALUE_TYPE_SWITCH_COMPAT = 2;
+
     public PlayItemView(Context context) {
         super(context);
         initView(context);
-        mOpenIcon.setImageResource( R.drawable.arrow_right);
+        mOpenIcon.setImageResource(R.drawable.arrow_right);
+        mPaint.setColor(defaultSidelineColor);
     }
 
     public PlayItemView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView(context);
+
         final TypedArray a = context.obtainStyledAttributes(
                 attrs, R.styleable.PlayItemView);
-        mTitleIcon.setImageDrawable(a.getDrawable(R.styleable.PlayItemView_item_title_icon));
+        valueType = a.getInt(R.styleable.PlayItemView_item_value_type, VALUE_TYPE_TEXTVIEW);
+        initView(context);
+        Drawable titleIconDrawable = a.getDrawable(R.styleable.PlayItemView_item_title_icon);
+        if (titleIconDrawable == null) {
+            mTitleIcon.setVisibility(View.GONE);
+        } else {
+            mTitleIcon.setImageDrawable(titleIconDrawable);
+        }
         mTitle.setText(a.getString(R.styleable.PlayItemView_item_title));
-        mValue.setText(a.getString(R.styleable.PlayItemView_item_value));
-        mOpenIcon.setImageResource(a.getResourceId(R.styleable.PlayItemView_item_open_icon,R.drawable.arrow_right));
-        mOpenIcon.setVisibility(a.getBoolean(R.styleable.PlayItemView_item_open_show,true)? View.VISIBLE: View.GONE);
+        mTitle.setSingleLine();
+
+        if (valueType == VALUE_TYPE_TEXTVIEW) {
+            mValue.setText(a.getString(R.styleable.PlayItemView_item_value));
+            mValue.setTextColor(Color.parseColor("#8a8a8a"));
+            mValue.setGravity(Gravity.RIGHT);
+            mValue.setSingleLine();
+            mValue.setEllipsize(TextUtils.TruncateAt.MIDDLE);
+        } else if (valueType == VALUE_TYPE_EDITTEXT) {
+            mEditText.setText(a.getString(R.styleable.PlayItemView_item_value));
+        } else if (valueType == VALUE_TYPE_SWITCH_COMPAT) {
+            mSwitchCompat.setChecked(a.getBoolean(R.styleable.PlayItemView_item_value, false));
+        }
+
+
+        mTitle.setTextColor(Color.parseColor("#333333"));
+
+        mOpenIcon.setImageResource(a.getResourceId(R.styleable.PlayItemView_item_open_icon, R.drawable.arrow_right));
+        mOpenIcon.setVisibility(a.getBoolean(R.styleable.PlayItemView_item_open_show, false) ? View.VISIBLE : View.GONE);
+        mPaint.setColor(a.getColor(R.styleable.PlayItemView_item_divider_color, defaultSidelineColor));
+        position = a.getInt(R.styleable.PlayItemView_item_position, POSITION_SINGLE);
         a.recycle();
     }
-    public void initView(Context context){
+
+    public void initView(Context context) {
         setOrientation(LinearLayout.HORIZONTAL);
         setGravity(Gravity.CENTER_VERTICAL);
         mTitle = new AppCompatTextView(context);
-        mValue  = new AppCompatTextView(context);
+
         mTitleIcon = new AppCompatImageView(context);
-        mOpenIcon  = new AppCompatImageView(context);
+        mOpenIcon = new AppCompatImageView(context);
         LayoutParams titleIconLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        int margin = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 16, context.getResources().getDisplayMetrics()));
+        int margin = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, context.getResources().getDisplayMetrics()));
+        int top = margin / 2;
         titleIconLayoutParams.leftMargin = margin;
-        titleIconLayoutParams.topMargin =margin;
-        titleIconLayoutParams.bottomMargin =margin;
-        addView(mTitleIcon,titleIconLayoutParams);
+        titleIconLayoutParams.topMargin = top;
+        titleIconLayoutParams.bottomMargin = top;
+        addView(mTitleIcon, titleIconLayoutParams);
 
 
         LayoutParams titleLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1);
         titleLayoutParams.leftMargin = margin;
-        titleLayoutParams.topMargin =margin;
-        titleLayoutParams.bottomMargin =margin;
+        titleLayoutParams.topMargin = top;
+        titleLayoutParams.bottomMargin = top;
         addView(mTitle, titleLayoutParams);
 
-        LayoutParams valueLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        valueLayoutParams.rightMargin= margin;
-        valueLayoutParams.leftMargin = margin;
-        valueLayoutParams.topMargin =margin;
-        valueLayoutParams.bottomMargin =margin;
-        addView(mValue,valueLayoutParams);
 
+        switch (valueType) {
+            case VALUE_TYPE_TEXTVIEW: {
+                mValue = new AppCompatTextView(context);
+                LayoutParams valueLayoutParams = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
+                valueLayoutParams.rightMargin = margin;
+                valueLayoutParams.leftMargin = margin;
+                valueLayoutParams.topMargin = top;
+                valueLayoutParams.bottomMargin = top;
+                addView(mValue, valueLayoutParams);
+                break;
+            }
+            case VALUE_TYPE_EDITTEXT: {
+                mEditText = new AppCompatEditText(context);
+                LayoutParams valueLayoutParams = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
+                valueLayoutParams.rightMargin = margin;
+                valueLayoutParams.leftMargin = margin;
+//                valueLayoutParams.topMargin =top;
+//                valueLayoutParams.bottomMargin =top;
+                addView(mEditText, valueLayoutParams);
+                break;
+            }
+            case VALUE_TYPE_SWITCH_COMPAT: {
+                mSwitchCompat = new SwitchCompat(context);
+                LayoutParams valueLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                valueLayoutParams.rightMargin = margin;
+                valueLayoutParams.leftMargin = margin;
+                valueLayoutParams.topMargin = top;
+                valueLayoutParams.bottomMargin = top;
+                addView(mSwitchCompat, valueLayoutParams);
+                break;
+            }
+
+        }
 
         LayoutParams openIconLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         openIconLayoutParams.rightMargin = margin;
-        addView(mOpenIcon,openIconLayoutParams);
-        mTitle.setTextColor(Color.parseColor("#333333"));
-        mValue.setTextColor(Color.parseColor("#8a8a8a"));
-        mValue.setGravity(Gravity.RIGHT);
+        addView(mOpenIcon, openIconLayoutParams);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            setBackground(newSelector(getContext(),255,999,-1,-1));
-        }else {
-            setBackgroundDrawable(newSelector(getContext(),255,999,-1,-1));
-        }
-        setClickable(true);
+        setBackgroundResource(R.drawable.item_backgroup_selector);
     }
-//    private ColorStateList createColorStateList(int normal, int pressed, int focused, int unable) {
-//        int[] colors = new int[] { pressed, focused, normal, focused, unable, normal };
-//        int[][] states = new int[6][];
-//        states[0] = new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled };
-//        states[1] = new int[] { android.R.attr.state_enabled, android.R.attr.state_focused };
-//        states[2] = new int[] { android.R.attr.state_enabled };
-//        states[3] = new int[] { android.R.attr.state_focused };
-//        states[4] = new int[] { android.R.attr.state_window_focused };
-//        states[5] = new int[] {};
-//        ColorStateList colorList = new ColorStateList(states, colors);
-//        return colorList;
-//    }
-    public static StateListDrawable newSelector(Context context, int idNormal, int idPressed, int idFocused,
-                                                int idUnable) {
-        StateListDrawable bg = new StateListDrawable();
-        Drawable normal = idNormal == -1 ? null :new ColorDrawable(idNormal);
-        Drawable pressed = idPressed == -1 ? null : new ColorDrawable(idPressed);
-        Drawable focused = idFocused == -1 ? null : new ColorDrawable(idFocused);
-        Drawable unable = idUnable == -1 ? null : new ColorDrawable(idUnable);
-        // View.PRESSED_ENABLED_STATE_SET
-        bg.addState(new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled }, pressed);
-        // View.ENABLED_FOCUSED_STATE_SET
-        bg.addState(new int[] { android.R.attr.state_enabled, android.R.attr.state_focused }, focused);
-        // View.ENABLED_STATE_SET
-        bg.addState(new int[] { android.R.attr.state_enabled }, normal);
-        // View.FOCUSED_STATE_SET
-        bg.addState(new int[] { android.R.attr.state_focused }, focused);
-        // View.WINDOW_FOCUSED_STATE_SET
-        bg.addState(new int[] { android.R.attr.state_window_focused }, unable);
-        // View.EMPTY_STATE_SET
-        bg.addState(new int[] {}, normal);
-        return bg;
-    }
-    public void setTitle(Character text){
+
+    public void setTitle(Character text) {
         mTitle.setText(text);
     }
 
-    public void setTitleIcon(int res){
+    public void setTitleIcon(int res) {
         mTitleIcon.setImageResource(res);
+        mTitleIcon.setVisibility(View.VISIBLE);
     }
-    public void setValue(Character text){
-        mValue.setText(text);
+
+    public void setValue(Character text) {
+        if (valueType == VALUE_TYPE_TEXTVIEW) {
+            mValue.setText(text);
+        } else if (valueType == VALUE_TYPE_EDITTEXT) {
+            mEditText.setText(text);
+        }
     }
-    public void setOpen(boolean open){
+
+    public void setValue(boolean checked) {
+        if (valueType == VALUE_TYPE_SWITCH_COMPAT) {
+            mSwitchCompat.setChecked(checked);
+        }
+    }
+
+    /**
+     * hide open icon
+     */
+    public void hideOpenIcon() {
         mOpenIcon.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        mOpenIcon.setVisibility(View.VISIBLE);
+        super.setOnClickListener(l);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        mPaint.setStrokeWidth(1);
+        switch (position) {
+            case POSITION_SINGLE:
+                canvas.drawLine(0, 0, getWidth(), 0, mPaint);
+                canvas.drawLine(0, getHeight(), getWidth(), getHeight(), mPaint);
+                break;
+            case POSITION_TOP:
+                canvas.drawLine(0, 0, getWidth(), 0, mPaint);
+                canvas.drawLine(0 + mTitle.getLeft(), getHeight(), getWidth(), getHeight(), mPaint);
+                break;
+            case POSITION_CENTER:
+                canvas.drawLine(0 + mTitle.getLeft(), 0, getWidth(), 0, mPaint);
+                canvas.drawLine(0 + mTitle.getLeft(), getHeight(), getWidth(), getHeight(), mPaint);
+                break;
+            case POSITION_BOTTOM:
+                canvas.drawLine(0 + mTitle.getLeft(), 0, getWidth(), 0, mPaint);
+                canvas.drawLine(0, getHeight(), getWidth(), getHeight(), mPaint);
+                break;
+        }
     }
 }
