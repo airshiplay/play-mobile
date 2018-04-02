@@ -84,6 +84,7 @@ public class PlayItemView extends LinearLayout {
 
 
         mTitle.setTextColor(Color.parseColor("#333333"));
+        mTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
 
         mOpenIcon.setImageResource(a.getResourceId(R.styleable.PlayItemView_item_open_icon, R.drawable.arrow_right));
         mOpenIcon.setVisibility(a.getBoolean(R.styleable.PlayItemView_item_open_show, false) ? View.VISIBLE : View.GONE);
@@ -100,7 +101,7 @@ public class PlayItemView extends LinearLayout {
         mTitleIcon = new AppCompatImageView(context);
         mOpenIcon = new AppCompatImageView(context);
         LayoutParams titleIconLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        int margin = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, context.getResources().getDisplayMetrics()));
+        int margin = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, context.getResources().getDisplayMetrics()));
         int top = margin / 2;
         titleIconLayoutParams.leftMargin = margin;
         titleIconLayoutParams.topMargin = top;
