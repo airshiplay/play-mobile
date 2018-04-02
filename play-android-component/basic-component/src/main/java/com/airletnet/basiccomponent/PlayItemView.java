@@ -6,7 +6,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -16,7 +18,9 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * Created by airlenet on 2018/3/30.
@@ -73,7 +77,9 @@ public class PlayItemView extends LinearLayout {
         } else if (valueType == VALUE_TYPE_EDITTEXT) {
             mEditText.setText(a.getString(R.styleable.PlayItemView_item_value));
         } else if (valueType == VALUE_TYPE_SWITCH_COMPAT) {
-            mSwitchCompat.setChecked(a.getBoolean(R.styleable.PlayItemView_item_value, false));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                mSwitchCompat.setChecked(a.getBoolean(R.styleable.PlayItemView_item_value, false));
+            }
         }
 
 
@@ -131,13 +137,15 @@ public class PlayItemView extends LinearLayout {
                 break;
             }
             case VALUE_TYPE_SWITCH_COMPAT: {
-                mSwitchCompat = new SwitchCompat(context);
-                LayoutParams valueLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-                valueLayoutParams.rightMargin = margin;
-                valueLayoutParams.leftMargin = margin;
-                valueLayoutParams.topMargin = top;
-                valueLayoutParams.bottomMargin = top;
-                addView(mSwitchCompat, valueLayoutParams);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                    mSwitchCompat = new SwitchCompat(context);
+                    LayoutParams valueLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                    valueLayoutParams.rightMargin = margin;
+                    valueLayoutParams.leftMargin = margin;
+                    valueLayoutParams.topMargin = top;
+                    valueLayoutParams.bottomMargin = top;
+                    addView(mSwitchCompat, valueLayoutParams);
+                }
                 break;
             }
 
@@ -167,12 +175,21 @@ public class PlayItemView extends LinearLayout {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public void setValue(boolean checked) {
         if (valueType == VALUE_TYPE_SWITCH_COMPAT) {
             mSwitchCompat.setChecked(checked);
         }
     }
-
+    public void setOnCheckedChangeListener(@Nullable CompoundButton.OnCheckedChangeListener listener) {
+        if (valueType == VALUE_TYPE_SWITCH_COMPAT) {
+            mSwitchCompat.setOnCheckedChangeListener(listener);
+        }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+    public void setOnEditorActionListener(TextView.OnEditorActionListener l) {
+        mEditText.setOnEditorActionListener(l);
+    }
     /**
      * hide open icon
      */

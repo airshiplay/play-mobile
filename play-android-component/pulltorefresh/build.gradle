@@ -36,7 +36,7 @@ publish {
     userOrg = 'airshiplay'//bintray.com用户名
     groupId = 'com.airletnet.mobile'//jcenter上的路径
     artifactId = 'pulltorefresh'//项目名称
-    publishVersion = '0.0.2'//版本号
+    publishVersion = '1.0.0'//版本号
     desc = 'Android pulltorefresh'
     website = 'https://github.com/airshiplay/play-mobile'
 }

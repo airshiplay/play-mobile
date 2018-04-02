@@ -38,7 +38,7 @@ publish {
     userOrg = 'airshiplay'//bintray.com用户名
     groupId = 'com.airletnet.mobile'//jcenter上的路径
     artifactId = 'basic-component'//项目名称
-    publishVersion = '1.0.0-snapshot'//版本号
+    publishVersion = '1.0.0'//版本号
     desc = 'Android SVProgressHud'
     website = 'https://github.com/airshiplay/play-mobile'
 }
