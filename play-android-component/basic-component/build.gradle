@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 26
@@ -34,6 +33,7 @@ dependencies {
 //    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
 }
 
+apply plugin: 'com.novoda.bintray-release'
 publish {
     userOrg = 'airshiplay'//bintray.com用户名
     groupId = 'com.airletnet.mobile'//jcenter上的路径
@@ -42,3 +42,6 @@ publish {
     desc = 'Android SVProgressHud'
     website = 'https://github.com/airshiplay/play-mobile'
 }
+
+//apply from: './jcenter-push.gradle'  //./gradlew bintrayUpload
+//apply from: './nexus-push.gradle'  //./gradlew uploadArchives
