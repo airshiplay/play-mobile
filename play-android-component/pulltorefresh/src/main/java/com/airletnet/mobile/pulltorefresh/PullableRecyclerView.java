@@ -6,15 +6,33 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 
 public class PullableRecyclerView extends WrapRecyclerView implements Pullable {
     public static final String TAG = PullableRecyclerView.class.getSimpleName();
+    private View emptyView;
     public int mFirstVisiblePosition = -1;
     public int mLastVisiblePosition = -1;
     private OnScrollUpListener mOnScrollUpListener;
     private int mTempLastVisiblePosition = -1;
+    final private AdapterDataObserver observer = new AdapterDataObserver() {
+        @Override
+        public void onChanged() {
+            checkIfEmpty();
+        }
+
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            checkIfEmpty();
+        }
+
+        @Override
+        public void onItemRangeRemoved(int positionStart, int itemCount) {
+            checkIfEmpty();
+        }
+    };
 
     public PullableRecyclerView(Context context) {
         this(context, null, 0);
@@ -45,10 +63,38 @@ public class PullableRecyclerView extends WrapRecyclerView implements Pullable {
             }
         });
     }
+    private void checkIfEmpty() {
+        if (emptyView != null) {
+            final boolean emptyViewVisible = getAdapter() == null ||
+                    getAdapter().getItemCount() == 0;
+            emptyView.setVisibility(emptyViewVisible ? VISIBLE : GONE);
+            setVisibility(emptyViewVisible ? INVISIBLE : VISIBLE);
+        }
+    }
+    @Override
+    public void setAdapter(Adapter adapter) {
+        final Adapter oldAdapter = getAdapter();
+        if (oldAdapter != null) {
+            oldAdapter.unregisterAdapterDataObserver(observer);
+        }
+        super.setAdapter(adapter);
+        if (adapter != null) {
+            adapter.registerAdapterDataObserver(observer);
+        }
 
+        checkIfEmpty();
+    }
+
+    //设置没有内容时，提示用户的空布局
+    public void setEmptyView(View emptyView) {
+        this.emptyView = emptyView;
+        checkIfEmpty();
+    }
     @Override
     public boolean canPullDown() {
         LayoutManager lm = getLayoutManager();
+        if(lm ==null)
+            return true;
         mFirstVisiblePosition = getFirstVisibleItemPosition();
         View view = lm.findViewByPosition(mFirstVisiblePosition);
         int count = getAdapter().getItemCount();
@@ -65,6 +111,8 @@ public class PullableRecyclerView extends WrapRecyclerView implements Pullable {
     @Override
     public boolean canPullUp() {
         LayoutManager lm = getLayoutManager();
+        if(lm ==null)
+            return true;
         mFirstVisiblePosition = getFirstVisibleItemPosition();
         mLastVisiblePosition = getLastVisibleItemPosition();
         int count = getAdapter().getItemCount();

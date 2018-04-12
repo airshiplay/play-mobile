@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <com.airletnet.mobile.pulltorefresh.PullToRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:id="@+id/pullRefreshLayout">
+        <com.airletnet.mobile.pulltorefresh.PullableRecyclerView android:id="@+id/pullRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.airletnet.mobile.pulltorefresh.PullableRecyclerView>
+    </com.airletnet.mobile.pulltorefresh.PullToRefreshLayout>
+</FrameLayout>

@@ -157,7 +157,6 @@ public class SVProgressHUD {
         scheduleDismiss();
     }
 
-
     public void showInfoWithStatus(String string) {
         if(isShowing())return;
         setMaskType(SVProgressHUDMaskType.Black);
@@ -165,6 +164,7 @@ public class SVProgressHUD {
         svShow();
         scheduleDismiss();
     }
+
 
     public void showInfoWithStatus(String string, SVProgressHUDMaskType maskType) {
         if(isShowing())return;

@@ -14,5 +14,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         new SVProgressHUD(this).showWithStatus("loading");
         startActivity(new Intent(getApplicationContext(),BasicActivity.class));
+        startActivity(new Intent(getApplicationContext(),PullToRefreshActivity.class));
     }
 }

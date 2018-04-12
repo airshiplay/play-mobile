@@ -77,6 +77,8 @@ public class PullToRefreshLayout extends RelativeLayout {
     // 均匀旋转动画
     private RotateAnimation refreshingAnimation;
 
+    //默认EmptyView
+    private EmptyView defaultEmptyView;
     // 默认下拉头
     private View defaultRefreshView;
     // 下拉的箭头
@@ -114,6 +116,8 @@ public class PullToRefreshLayout extends RelativeLayout {
     private Handler updateHandler;
 
     // 自定义下拉头
+    private View customEmptyView;
+    // 自定义下拉头
     private View customRefreshView;
     // 自定义上拉头
     private View customLoadmoreView;
@@ -126,7 +130,8 @@ public class PullToRefreshLayout extends RelativeLayout {
     private View refreshView;
     // 上拉头
     private View loadmoreView;
-
+    //空数据View
+    private View emptyView;
     // 是否已经准备下拉
     private boolean mPreparedPullDown;
     // 是否已经准备上拉
@@ -166,8 +171,11 @@ public class PullToRefreshLayout extends RelativeLayout {
         refreshView = defaultRefreshView;
         defaultLoadmoreView = inflater.inflate(R.layout.load_more, this, false);
         loadmoreView = defaultLoadmoreView;
+        emptyView = defaultEmptyView = new EmptyView(this.getContext());
+
         addView(defaultRefreshView);
         addView(defaultLoadmoreView);
+        addView(emptyView);
     }
 
     /**
@@ -186,6 +194,15 @@ public class PullToRefreshLayout extends RelativeLayout {
         return pullableView;
     }
 
+    public View getEmptyView(){
+        return emptyView;
+    }
+    public void setCustomEmptyView(View v){
+        customEmptyView = v;
+        removeView(defaultEmptyView);
+        addView(customEmptyView);
+        emptyView = customEmptyView;
+    }
     /**
      * 设置自定义下拉头
      *
@@ -289,7 +306,7 @@ public class PullToRefreshLayout extends RelativeLayout {
                     hide();
                 }
             }
-        }, 2400);
+        }, 500);
     }
 
     /**
@@ -680,6 +697,8 @@ public class PullToRefreshLayout extends RelativeLayout {
             refreshDist = refreshView.getMeasuredHeight();
             loadmoreView.measure(0, 0);
             loadmoreDist = loadmoreView.getMeasuredHeight();
+            emptyView.measure(0,0);
+            emptyView.getMeasuredHeight();
         }
         // 改变子控件的布局，这里直接用(pullDownY + pullUpY)作为偏移量，这样就可以不对当前状态作区分
         refreshView.layout(0,
@@ -693,6 +712,9 @@ public class PullToRefreshLayout extends RelativeLayout {
                 loadmoreView.getMeasuredWidth(),
                 (int) (pullDownY + pullUpY) + pullableView.getMeasuredHeight()
                         + loadmoreView.getMeasuredHeight());
+        emptyView.layout(0, (int) (pullDownY + pullUpY),
+                pullableView.getMeasuredWidth(), (int) (pullDownY + pullUpY)
+                        + pullableView.getMeasuredHeight());
     }
 
     class MyTimer {
@@ -979,5 +1001,23 @@ public class PullToRefreshLayout extends RelativeLayout {
             }
         }
 
+    }
+    public void setEmptyInfo(int resId,int titleId,int msgId,int operateId){
+        defaultEmptyView.setInfo(resId,titleId,msgId,operateId);
+    }
+    public void setEmptyInfo(int resId,String titleId,String msgId,String operateId){
+        defaultEmptyView.setInfo(resId,titleId,msgId,operateId);
+    }
+    public void setEmptyInfo(int titleId,int msgId,int operateId){
+        defaultEmptyView.setInfo(titleId,msgId,operateId);
+    }
+    public void setEmptyInfo(int titleId,int operateId){
+        defaultEmptyView.setInfo(titleId,operateId);
+    }
+    public void setEmptyInfo(String titleId,String msgId,String operateId){
+        defaultEmptyView.setInfo(titleId,msgId,operateId);
+    }
+    public void setEmptyOperateOnClickListener(View.OnClickListener listener){
+        defaultEmptyView.setOperate(listener);
     }
 }
