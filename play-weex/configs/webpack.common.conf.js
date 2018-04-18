@@ -7,72 +7,58 @@ const vueLoaderConfig = require('./vue-loader.conf');
 const vueWebTemp = helper.rootNode(config.templateDir);
 const hasPluginInstalled = fs.existsSync(helper.rootNode(config.pluginFilePath));
 const isWin = /^win/.test(process.platform);
-const webEntry = {};
-const weexEntry = {};
+const weexEntry = {
+  'index': helper.root('entry.js')
+}
 
-// Wraping the entry file for web.
-const getEntryFileContent = (entryPath, vueFilePath) => {
-  let relativeVuePath = path.relative(path.join(entryPath, '../'), vueFilePath);
-  let relativeEntryPath = helper.root(config.entryFilePath);
+const getEntryFileContent = (source, routerpath) => {
+  let dependence = `import Vue from 'vue'\n`;
+  dependence += `import weex from 'weex-vue-render'\n`;
   let relativePluginPath = helper.rootNode(config.pluginFilePath);
-
+  let entryContents = fs.readFileSync(source).toString();
   let contents = '';
-  let entryContents = fs.readFileSync(relativeEntryPath).toString();
+  entryContents = dependence + entryContents;
+  entryContents = entryContents.replace(/\/\* weex initialized/, match => `weex.init(Vue)\n${match}`);
   if (isWin) {
-    relativeVuePath = relativeVuePath.replace(/\\/g, '\\\\');
     relativePluginPath = relativePluginPath.replace(/\\/g, '\\\\');
   }
   if (hasPluginInstalled) {
     contents += `\n// If detact plugins/plugin.js is exist, import and the plugin.js\n`;
     contents += `import plugins from '${relativePluginPath}';\n`;
     contents += `plugins.forEach(function (plugin) {\n\tweex.install(plugin)\n});\n\n`;
+    entryContents = entryContents.replace(/\.\/router/, routerpath);
     entryContents = entryContents.replace(/weex\.init/, match => `${contents}${match}`);
-    contents = ''
   }
-  contents += `\nconst App = require('${relativeVuePath}');\n`;
-  contents += `new Vue(Vue.util.extend({el: '#root'}, App));\n`;
-  return entryContents + contents;
+  return entryContents;
 }
 
-// Retrieve entry file mappings by function recursion
-const getEntryFile = (dir) => {
-  dir = dir || '.';
-  const directory = helper.root(dir);
-  fs.readdirSync(directory).forEach((file) => {
-    const fullpath = path.join(directory, file);
-    const stat = fs.statSync(fullpath);
-    const extname = path.extname(fullpath);
-    if (stat.isFile() && extname === '.vue') {
-      const name = path.join(dir, path.basename(file, extname));
-      if (extname === '.vue') {
-        const entryFile = path.join(vueWebTemp, dir, path.basename(file, extname) + '.js');
-        fs.outputFileSync(entryFile, getEntryFileContent(entryFile, fullpath));
-        webEntry[name] = entryFile;
-      }
-      weexEntry[name] = fullpath + '?entry=true';
-    }
-    else if (stat.isDirectory() && file !== 'build' && file !== 'include') {
-      const subdir = path.join(dir, file);
-      getEntryFile(subdir);
-    }
-  });
+const getRouterFileContent = (source) => {
+  const dependence = `import Vue from 'vue'\n`;
+  let routerContents = fs.readFileSync(source).toString();
+  routerContents = dependence + routerContents;
+  return routerContents;
 }
 
-// Generate an entry file array before writing a webpack configuration
-getEntryFile();
-
-
-const createLintingRule = () => ({
-  test: /\.(js|vue)$/,
-  loader: 'eslint-loader',
-  enforce: 'pre',
-  include: [helper.rootNode('src'), helper.rootNode('test')],
-  options: {
-    formatter: require('eslint-friendly-formatter'),
-    emitWarning: !config.dev.showEslintErrorsInOverlay
+const getEntryFile = () => {
+  const entryFile = path.join(vueWebTemp, config.entryFilePath)
+  const routerFile = path.join(vueWebTemp, config.routerFilePath)
+  fs.outputFileSync(entryFile, getEntryFileContent(helper.root(config.entryFilePath), routerFile));
+  fs.outputFileSync(routerFile, getRouterFileContent(helper.root(config.routerFilePath)));
+  return {
+    index: entryFile
   }
-})
-const useEslint = config.dev.useEslint ? [createLintingRule()] : []
+}
+
+// The entry file for web needs to add some library. such as vue, weex-vue-render
+// 1. src/entry.js 
+// import Vue from 'vue';
+// import weex from 'weex-vue-render';
+// weex.init(Vue);
+// 2. src/router/index.js
+// import Vue from 'vue'
+const webEntry = getEntryFile();
+
+
 
 /**
  * Plugins for webpack configuration.
@@ -116,7 +102,7 @@ const webConfig = {
    */
   module: {
     // webpack 2.0 
-    rules: useEslint.concat([
+    rules: [
       {
         test: /\.js$/,
         use: [{
@@ -144,7 +130,7 @@ const webConfig = {
           })
         }]
       }
-    ])
+    ]
   },
   /*
    * Add additional plugins to the compiler.
