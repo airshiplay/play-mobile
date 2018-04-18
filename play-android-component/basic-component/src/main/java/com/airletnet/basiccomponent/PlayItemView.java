@@ -40,6 +40,7 @@ public class PlayItemView extends LinearLayout {
     public static final int POSITION_TOP = 1;
     public static final int POSITION_CENTER = 2;
     public static final int POSITION_BOTTOM = 3;
+    public static final int POSITION_TITLE = 4;
     int valueType = 0;
     public static final int VALUE_TYPE_TEXTVIEW = 0;
     public static final int VALUE_TYPE_EDITTEXT = 1;
@@ -82,7 +83,6 @@ public class PlayItemView extends LinearLayout {
             }
         }
 
-
         mTitle.setTextColor(Color.parseColor("#333333"));
         mTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
 
@@ -91,6 +91,10 @@ public class PlayItemView extends LinearLayout {
         mPaint.setColor(a.getColor(R.styleable.PlayItemView_item_divider_color, defaultSidelineColor));
         position = a.getInt(R.styleable.PlayItemView_item_position, POSITION_SINGLE);
         a.recycle();
+
+        if(getBackground()==null){
+            setBackgroundResource(R.drawable.item_backgroup_selector);
+        }
     }
 
     public void initView(Context context) {
@@ -156,10 +160,10 @@ public class PlayItemView extends LinearLayout {
         openIconLayoutParams.rightMargin = margin;
         addView(mOpenIcon, openIconLayoutParams);
 
-        setBackgroundResource(R.drawable.item_backgroup_selector);
+
     }
 
-    public void setTitle(Character text) {
+    public void setTitle(CharSequence text) {
         mTitle.setText(text);
     }
 
@@ -168,7 +172,7 @@ public class PlayItemView extends LinearLayout {
         mTitleIcon.setVisibility(View.VISIBLE);
     }
 
-    public void setValue(Character text) {
+    public void setValue(CharSequence text) {
         if (valueType == VALUE_TYPE_TEXTVIEW) {
             mValue.setText(text);
         } else if (valueType == VALUE_TYPE_EDITTEXT) {

@@ -15,5 +15,6 @@ public class MainActivity extends AppCompatActivity {
         new SVProgressHUD(this).showWithStatus("loading");
         startActivity(new Intent(getApplicationContext(),BasicActivity.class));
         startActivity(new Intent(getApplicationContext(),PullToRefreshActivity.class));
+        startActivity(new Intent(getApplicationContext(),DeviceInfoActivity.class));
     }
 }

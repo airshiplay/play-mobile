@@ -49,25 +49,12 @@
         app:item_value_type="edit_text"
         app:item_value="value" />
     <com.airletnet.basiccomponent.PlayItemView
-        android:id="@+id/item_5"
+        android:id="@+id/item_deviceInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        app:item_title="WLAN"
+        app:item_title="本机信息"
         android:clipToPadding="false"
-        app:item_position="bottom"
-        app:item_value_type="switch_compat"
-        app:item_value="true" />
-    <android.support.v7.widget.SwitchCompat
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <com.airletnet.basiccomponent.SwitchButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <com.airletnet.basiccomponent.LabeledSwitch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <com.github.zagum.switchicon.SwitchIconView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        app:item_position="bottom" />
+
 </LinearLayout>

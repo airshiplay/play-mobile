@@ -17,7 +17,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".BasicActivity"/>
-        <activity android:name=".PullToRefreshActivity"/>
+        <activity android:name=".PullToRefreshActivity"
+            android:configChanges="orientation"/>
+        <activity android:name=".DeviceInfoActivity"
+            android:configChanges="orientation|navigation|layoutDirection|screenSize|keyboard|keyboardHidden"
+            android:label="设备信息"/>
     </application>
 
 </manifest>

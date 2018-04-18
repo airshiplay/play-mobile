@@ -14,6 +14,7 @@ public class PullableRecyclerView extends WrapRecyclerView implements Pullable {
     public static final String TAG = PullableRecyclerView.class.getSimpleName();
     private View emptyView;
     public int mFirstVisiblePosition = -1;
+    public int firstViewTop=0;
     public int mLastVisiblePosition = -1;
     private OnScrollUpListener mOnScrollUpListener;
     private int mTempLastVisiblePosition = -1;
@@ -101,11 +102,15 @@ public class PullableRecyclerView extends WrapRecyclerView implements Pullable {
         if (0 == count) {
             // 没有item的时候也可以下拉刷新
             return true;
-        } else if (null != view && view.getTop() == 0 && mFirstVisiblePosition == 0) {
+        } else if (null != view && view.getTop() == firstViewTop && mFirstVisiblePosition == 0) {
             // 滑到ListView的顶部了
             return true;
         } else
             return false;
+    }
+
+    public void setFirstViewTop(int firstViewTop){
+        this.firstViewTop =firstViewTop;
     }
 
     @Override
