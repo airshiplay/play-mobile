@@ -30,6 +30,9 @@ allprojects {
             links "http://docs.oracle.com/javase/7/docs/api"
         }
     }
+    tasks.withType(Javadoc).all {
+        enabled = false
+    }
 }
 
 task clean(type: Delete) {

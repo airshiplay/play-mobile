@@ -7,7 +7,7 @@
 
     android:orientation="vertical">
 
-    <com.airletnet.basiccomponent.PlayItemView
+    <com.airlenet.component.PlayItemView
         android:layout_marginTop="20dp"
         android:id="@+id/item_1"
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         app:item_title_icon="@mipmap/ic_launcher"
         app:item_value="value" />
 
-    <com.airletnet.basiccomponent.PlayItemView
+    <com.airlenet.component.PlayItemView
         android:id="@+id/item_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         app:item_title_icon="@mipmap/ic_launcher"
         app:item_value="value" />
 
-    <com.airletnet.basiccomponent.PlayItemView
+    <com.airlenet.component.PlayItemView
         android:layout_marginTop="20dp"
         android:id="@+id/item_3"
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
         android:clipToPadding="false"
         app:item_position="top"
         app:item_value="value" />
-    <com.airletnet.basiccomponent.PlayItemView
+    <com.airlenet.component.PlayItemView
          android:id="@+id/item_4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:item_position="center"
         app:item_value_type="edit_text"
         app:item_value="value" />
-    <com.airletnet.basiccomponent.PlayItemView
+    <com.airlenet.component.PlayItemView
         android:id="@+id/item_deviceInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

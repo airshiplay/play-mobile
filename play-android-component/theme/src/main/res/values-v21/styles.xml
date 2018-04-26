@@ -1,0 +1,16 @@
+<resources>>
+
+    <style name="YKAppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+    </style>
+
+    <style name="YKThemeToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorControlNormal">#333333</item>
+        <item name="android:navigationIcon">@drawable/navigation_icon</item>
+        <item name="navigationIcon">@drawable/navigation_icon</item>
+        <item name="titleTextColor">@color/white</item>
+    </style>
+</resources>

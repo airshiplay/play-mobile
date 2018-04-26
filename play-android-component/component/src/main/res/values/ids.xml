@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="toolbar" type="id" />
+    <item name="cb_item_tag" type="id" />
+    <item name="left_listview" type="id" />
+    <item name="right_listview" type="id" />
+    <item name="delegate_activity" type="string" />
+    <item name="delegate_fragment" type="string" />
+</resources>

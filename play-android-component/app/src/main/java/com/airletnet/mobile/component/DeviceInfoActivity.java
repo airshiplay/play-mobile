@@ -8,8 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 
-import com.airletnet.basiccomponent.PlayItemView;
-import com.airletnet.mobile.svprogresshud.SVProgressHUD;
+import com.airlenet.component.PlayItemView;
 
 /**
  * Created by lig on 2018/4/16.

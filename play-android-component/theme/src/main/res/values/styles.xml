@@ -1,0 +1,84 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="YKAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">#333333</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="actionBarSize">@dimen/titleBarHeight</item>
+        <item name="android:textColorSecondary">#333333</item>
+    </style>
+
+    <style name="toolbar_theme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorControlNormal">#333333</item>
+    </style>
+
+    <style name="YKAppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="YKThemeToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorControlNormal">#333333</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="navigationIcon">@drawable/navigation_icon</item>
+    </style>
+
+    <style name="button">
+        <item name="android:minHeight">36dp</item>
+        <item name="android:minWidth">36dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+
+    <style name="button.green">
+        <item name="android:background">@drawable/button_green_bg_selector</item>
+        <item name="android:textColor">@color/button_blue_text_color_selector</item>
+    </style>
+
+    <style name="button.blue">
+        <item name="android:background">@drawable/button_blue_bg_selector</item>
+        <item name="android:textColor">@color/button_blue_text_color_selector</item>
+    </style>
+
+    <style name="button.orange">
+        <item name="android:background">@drawable/button_orange_bg_selector</item>
+        <item name="android:textColor">@color/button_blue_text_color_selector</item>
+    </style>
+
+    <style name="button.green.bottom">
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="item">
+
+    </style>
+
+    <style name="second_title">
+        <item name="android:background">@color/white</item>
+        <item name="android:paddingBottom">@dimen/item_padding</item>
+        <item name="android:paddingLeft">@dimen/item_padding20</item>
+        <item name="android:paddingTop">@dimen/item_padding</item>
+        <item name="android:textColor">#00a0e9</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="item.person">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+</resources>

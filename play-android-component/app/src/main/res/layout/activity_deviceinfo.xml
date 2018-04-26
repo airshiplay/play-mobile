@@ -11,25 +11,25 @@
 
 
 
-        <com.airletnet.basiccomponent.PlayItemView
+        <com.airlenet.component.PlayItemView
             android:layout_marginTop="20dp"
             android:id="@+id/sys_brand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:item_title="设备品牌" />
 
-        <com.airletnet.basiccomponent.PlayItemView
+        <com.airlenet.component.PlayItemView
             android:id="@+id/sys_model"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:item_title="设备型号" />
-        <com.airletnet.basiccomponent.PlayItemView
+        <com.airlenet.component.PlayItemView
             android:id="@+id/sys_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             app:item_title="系统版本" />
-        <com.airletnet.basiccomponent.PlayItemView
+        <com.airlenet.component.PlayItemView
             android:id="@+id/sys_sdk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
 
 
 
-        <com.airletnet.basiccomponent.PlayItemView
+        <com.airlenet.component.PlayItemView
             android:id="@+id/sys_display"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,39 +48,39 @@
             app:item_title="显示"
             app:item_position="title"/>
 
-        <com.airletnet.basiccomponent.PlayItemView
+        <com.airlenet.component.PlayItemView
             android:id="@+id/sys_density"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:item_title="density" />
-        <com.airletnet.basiccomponent.PlayItemView
+        <com.airlenet.component.PlayItemView
             android:id="@+id/sys_scaledDensity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:item_title="scaledDensity" />
-        <com.airletnet.basiccomponent.PlayItemView
+        <com.airlenet.component.PlayItemView
             android:id="@+id/sys_densityDpi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:item_title="densityDpi" />
 
-        <com.airletnet.basiccomponent.PlayItemView
+        <com.airlenet.component.PlayItemView
             android:id="@+id/sys_widthPixels"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:item_title="widthPixels" />
 
-        <com.airletnet.basiccomponent.PlayItemView
+        <com.airlenet.component.PlayItemView
             android:id="@+id/sys_heightPixels"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:item_title="heightPixels" />
-        <com.airletnet.basiccomponent.PlayItemView
+        <com.airlenet.component.PlayItemView
             android:id="@+id/sys_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:item_title="内容区" />
-        <com.airletnet.basiccomponent.PlayItemView
+        <com.airlenet.component.PlayItemView
             android:id="@+id/sys_actionBarHeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

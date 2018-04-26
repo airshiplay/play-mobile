@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color><!-- ActionBar的颜色-->
+    <color name="colorPrimaryDark">#000000</color><!--对应状态栏的颜色-->
+    <color name="colorAccent">#22ac38</color><!--对应EditText编辑时、RadioButton选中、CheckBox等选中时的颜色-->
+    <color name="textColorPrimary">#000000</color>
+    <color name="grey_400">#BDBDBD</color>
+    <color name="grey_600">#757575</color>
+    <color name="item_selected">#e5e5e5</color>
+    <color name="toolbar_bg_color">#00a0e9</color>
+    <color name="black">#ff000000</color>
+    <color name="red">#FFFF0000</color>
+    <color name="transparent">#00000000</color>
+    <color name="green">#FF00FF00</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="table_line_color">#e6e6e6</color>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="excel_layout">
+        <attr name="columnCount" format="integer" />
+        <attr name="columnNames" format="reference" />
+        <attr name="rowCount" format="integer" />
+        <attr name="space_color" format="color" />
+        <attr name="cell_color" format="color" />
+    </declare-styleable>
+
+</resources>

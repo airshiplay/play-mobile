@@ -1,1 +1,1 @@
-include ':app', ':svprogresshud', ':pulltorefresh', ':pulltorefreshrecyclerview', ':pulltorefreshrecyclerview', ':basic-component'
+include ':app', ':svprogresshud', ':pulltorefresh', ':pulltorefreshrecyclerview', ':pulltorefreshrecyclerview', ':component'

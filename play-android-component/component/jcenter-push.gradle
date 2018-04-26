@@ -1,0 +1,85 @@
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+def siteUrl = 'https://github.com/airshiplay/play-mobile'  // 项目的主页
+def gitUrl = 'https://github.com/airshiplay/play-mobile.git'  // Git仓库的url
+
+group = 'com.airletnet.mobile'  // 一般写唯一的包名
+version = '0.0.1'  // 版本号
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'component for android'  //项目描述
+                url siteUrl
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {  //填写的一些基本信息
+                        id 'airlenet'
+                        name 'airlenet'
+                        email 'airshiplay@126.com'
+                    }
+                }
+
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+
+        }
+    }
+}
+
+task androidJavadocs(type: Javadoc) {
+    options.encoding "UTF-8"
+    options.charSet 'UTF-8'
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    options.links("http://docs.oracle.com/javase/7/docs/api/");
+    options.linksOffline "http://d.android.com/reference","${android.sdkDirectory}/docs/reference"
+    exclude '**/BuildConfig.java'
+    exclude '**/R.java'
+    failOnError = false
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+artifacts {
+    archives androidSourcesJar
+}
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        version {
+            name = '0.0.1'
+            desc = 'component for android'
+        }
+        repo = 'maven'    // bintray上创建的仓库名，我这用的maven
+        name = 'component'  //发布到JCenter上的项目名字
+        licenses = ['Apache-2.0']
+        vcsUrl = gitUrl
+        publish = true
+    }
+}
