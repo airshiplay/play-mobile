@@ -320,7 +320,7 @@ public class SVProgressHUD {
         }
     };
 
-    private void scheduleDismiss() {
+    public void scheduleDismiss() {
         mHandler.removeCallbacksAndMessages(null);
         mHandler.sendEmptyMessageDelayed(0, DISMISSDELAYED);
     }
